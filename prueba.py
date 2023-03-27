@@ -1,27 +1,39 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
-df = pd.read_csv('microbit.csv')
+file = sys.argv[1]
+
+df = pd.read_csv(file)
 
 print(df)
 
-# Tomado de https://stackoverflow.com/questions/66520769/python-contour-polar-plot-from-discrete-data
+# Tomado de https://stackoverflow.com/questions/66520769/python-contour-polar-plot-from-discrete-data (and more...)
+
+colormap='gnuplot2'
 
 fig = plt.figure(figsize=(12, 4))
 
 ax = fig.add_subplot(121)
-ax.tricontourf(df.azimuth, df.altitude, df.measure, levels=256, cmap='hsv')
+tcf = ax.tricontourf(df.azimuth, df.altitude, df.measure, levels=256, cmap=colormap)
 
+fig.colorbar(tcf)
+
+theta = np.radians(df.azimuth+90) # For theta=0 at the top
+rad = 90 - df.altitude
 ax = fig.add_subplot(122)
-theta = np.radians(df.azimuth)
-rad = df.altitude
-ax.tricontourf(rad * np.cos(theta), rad * np.sin(theta), df.measure, levels=256, cmap='hsv')
+
+ax_polar = fig.add_axes(ax.get_position(), polar=True)
+ax_polar.set_theta_zero_location("N")  # theta=0 at the top
+ax_polar.set_theta_direction(1)  
+ax_polar.set_facecolor('none') # make transparent
+ax_polar.set_rlim(bottom=df.altitude.max(), top=df.altitude.min())
+
+ax.tricontourf(rad * np.cos(theta), rad * np.sin(theta), df.measure, levels=256, cmap=colormap)
 ax.set_aspect('equal')
 ax.axis('off')
 
-ax_polar = fig.add_axes(ax.get_position(), polar=True)
-ax_polar.set_facecolor('none') # make transparent
-ax_polar.set_ylim(0, rad.max())
+#ax.set_title("A line plot on a polar axis", va='bottom')
 
 plt.show()
