@@ -12,5 +12,5 @@ If `log` is given, the values measured are passed to `numpy.log10()` first, turn
 
 ## Folders
 
-* `data`: Where the *csv* files ares stored in this repo.
+* `data`: Where the *csv* files are stored in this repo.
 * `graphs`: Where the graphs are stored in this repo.
