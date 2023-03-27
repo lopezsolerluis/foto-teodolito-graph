@@ -11,7 +11,7 @@ print(df)
 
 # Tomado de https://stackoverflow.com/questions/66520769/python-contour-polar-plot-from-discrete-data (and more...)
 
-colormap='gnuplot2'
+colormap='rainbow'
 
 fig = plt.figure(figsize=(12, 4))
 
