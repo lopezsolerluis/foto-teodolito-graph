@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import sys
 
 file = sys.argv[1]
+logp = sys.argv[2] if len(sys.argv)>2 else 'lin'
 
 df = pd.read_csv(file)
 
@@ -12,11 +13,12 @@ print(df)
 # Tomado de https://stackoverflow.com/questions/66520769/python-contour-polar-plot-from-discrete-data (and more...)
 
 colormap='rainbow'
+values = np.log10(df.measure) if logp=='log' else df.measure
 
 fig = plt.figure(figsize=(12, 4))
 
 ax = fig.add_subplot(121)
-tcf = ax.tricontourf(df.azimuth, df.altitude, df.measure, levels=256, cmap=colormap)
+tcf = ax.tricontourf(df.azimuth, df.altitude, values, levels=256, cmap=colormap)
 
 fig.colorbar(tcf)
 
@@ -30,7 +32,7 @@ ax_polar.set_theta_direction(1)
 ax_polar.set_facecolor('none') # make transparent
 ax_polar.set_rlim(bottom=df.altitude.max(), top=df.altitude.min())
 
-ax.tricontourf(rad * np.cos(theta), rad * np.sin(theta), df.measure, levels=256, cmap=colormap)
+ax.tricontourf(rad * np.cos(theta), rad * np.sin(theta), values, levels=256, cmap=colormap)
 ax.set_aspect('equal')
 ax.axis('off')
 
