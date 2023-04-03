@@ -40,9 +40,6 @@ def process_df(df, log, file_name, number):
 
 df_total = pd.read_csv(file)
 
-indexAt90 = df_total.loc[df_total.altitude==90].index
-print(indexAt90)
-
 indices = [] # To get rows when altitude changes from max to min (90 to 20, let's say)
 for index, value in df_total.altitude.items():
     if df_total.iloc[index-1].altitude > value:
