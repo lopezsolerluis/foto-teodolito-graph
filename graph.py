@@ -21,7 +21,8 @@ def process_df(df, log, file_name, number):
     
     ax_polar = fig.add_axes(ax.get_position(), polar=True)
     ax_polar.set_theta_zero_location("N")  # theta=0 at the top
-    ax_polar.set_theta_direction(1)  
+    ax_polar.set_theta_direction(1)
+    ax_polar.set_xticks(np.radians(range(0,360,45)),labels=["N","NW","W","SW","S","SE","E","NE"])
     ax_polar.set_facecolor('none') # make transparent
     ax_polar.set_rlim(bottom=df.altitude.max(), top=df.altitude.min())    
 
