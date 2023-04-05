@@ -36,7 +36,7 @@ def process_df(df, log, file_name, number):
     plt.title(f"{sensor}  {day}/{month}/{year}  {h0}:{m0}~{h1}:{m1}")
     
     # plt.show()
-    plt.savefig(f"graphs/{file_name}--{sensor}-{number}.png")
+    plt.savefig(f"graphs/{file_name}--{sensor}-{log}-{number}.png")
 
 df_total = pd.read_csv(file)
 
@@ -52,4 +52,5 @@ file_name = os.path.splitext(file_path)[0]
 
 for i in range(len(indices)-1):
     df = df_total[indices[i]:indices[i+1]]
+    # print(df)
     process_df(df, logp, file_name, i)
